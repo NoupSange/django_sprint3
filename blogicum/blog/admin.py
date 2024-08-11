@@ -3,7 +3,6 @@ from django.contrib import admin
 from .models import Post, Category, Location
 
 
-
 class PostAdmin(admin.ModelAdmin):
     list_display = (
         'title',
@@ -18,7 +17,7 @@ class PostAdmin(admin.ModelAdmin):
     list_editable = (
         'is_published',
         'category'
-    )  
+    )
 
 
 class LocationAdmin(admin.ModelAdmin):

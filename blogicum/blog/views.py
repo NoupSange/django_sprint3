@@ -1,14 +1,15 @@
-from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 
-from blog.models import Category, Location, Post
+from blog.models import Category, Post
 from django.utils import timezone
 
 
 def index(request):
     template_name = 'blog/index.html'
     post_list = Post.objects.filter(
-        pub_date__lt=timezone.now(), is_published=True, category__is_published=True
+        pub_date__lt=timezone.now(),
+        is_published=True,
+        category__is_published=True
     ).select_related('author', 'location', 'category')[0:5]
     context = {
         'post_list': post_list
@@ -19,7 +20,11 @@ def index(request):
 def post_detail(request, pk):
     template_name = 'blog/detail.html'
     post = get_object_or_404(
-        Post.objects.filter(is_published=True, pub_date__lt=timezone.now(), category__is_published=True),
+        Post.objects.filter(
+            is_published=True,
+            pub_date__lt=timezone.now(),
+            category__is_published=True
+        ),
         pk=pk
     )
     context = {
