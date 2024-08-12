@@ -14,7 +14,8 @@ def get_postlist():
 
 
 def index(request):
-    post_list = get_postlist().select_related('author', 'location', 'category')[0:5]
+    post_list = get_postlist().select_related(
+        'author', 'location', 'category')[0:5]
     context = {
         'post_list': post_list
     }
