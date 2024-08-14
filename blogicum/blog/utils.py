@@ -1,5 +1,6 @@
-from blog.models import Post
 from django.utils import timezone
+
+from blog.models import Post
 
 
 def get_postlist():
