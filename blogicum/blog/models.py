@@ -2,7 +2,8 @@ from django.db import models
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
-chars = 256
+MAX_LENGTH = 256
+VISIBLE_CHARS = 15
 
 
 class CommonDataAbstractModel(models.Model):
@@ -21,7 +22,7 @@ class CommonDataAbstractModel(models.Model):
 
 
 class Post(CommonDataAbstractModel):
-    title = models.CharField(max_length=chars, verbose_name='Заголовок')
+    title = models.CharField(max_length=MAX_LENGTH, verbose_name='Заголовок')
     text = models.TextField(verbose_name='Текст')
     pub_date = models.DateTimeField(
         verbose_name='Дата и время публикации',
@@ -52,11 +53,11 @@ class Post(CommonDataAbstractModel):
         verbose_name_plural = 'Публикации'
 
     def __str__(self):
-        return self.title[:15]
+        return self.title[:VISIBLE_CHARS]
 
 
 class Category(CommonDataAbstractModel):
-    title = models.CharField(max_length=chars, verbose_name='Заголовок')
+    title = models.CharField(max_length=MAX_LENGTH, verbose_name='Заголовок')
     description = models.TextField(verbose_name='Описание')
     slug = models.SlugField(
         unique=True,
@@ -70,15 +71,18 @@ class Category(CommonDataAbstractModel):
         verbose_name_plural = 'Категории'
 
     def __str__(self):
-        return self.title[:15]
+        return self.title[:VISIBLE_CHARS]
 
 
 class Location(CommonDataAbstractModel):
-    name = models.CharField(max_length=chars, verbose_name='Название места')
+    name = models.CharField(
+        max_length=MAX_LENGTH,
+        verbose_name='Название места'
+    )
 
     class Meta():
         verbose_name = 'местоположение'
         verbose_name_plural = 'Местоположения'
 
     def __str__(self):
-        return self.name[:15]
+        return self.name[:VISIBLE_CHARS]

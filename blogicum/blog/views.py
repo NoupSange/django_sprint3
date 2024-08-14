@@ -1,16 +1,7 @@
 from django.shortcuts import render, get_object_or_404
-from django.utils import timezone
 
-from blog.models import Category, Post
-
-
-def get_postlist():
-    post_list = Post.objects.filter(
-        pub_date__lt=timezone.now(),
-        is_published=True,
-        category__is_published=True
-    )
-    return post_list
+from blog.models import Category
+from blog.utils import get_postlist
 
 
 def index(request):
